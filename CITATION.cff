@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: If you use this software, please cite it as below.
+title: "@three-ws/tty-avatar"
+abstract: "A live 3D avatar in your terminal. Renders any GLB (or any three.ws avatar by id) with a software rasterizer to truecolor half-blocks or braille, animates it with moods, and reacts in real time to Claude Code hooks so your coding agent has a face."
+version: 0.1.0
+license: Apache-2.0
+repository-code: "https://github.com/nirholas/tty-avatar"
+url: "https://three.ws"
+authors:
+  - name: three.ws
+    website: "https://three.ws"

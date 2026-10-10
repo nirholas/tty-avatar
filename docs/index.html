@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>@three-ws/tty-avatar: A live 3D avatar in your terminal</title>
+<meta name="description" content="A live 3D avatar in your terminal. Renders any GLB (or any three.ws avatar by id) with a software rasterizer to truecolor half-blocks or braille, animates it with moods, and reacts in real time to Claude Code hooks so your coding agent has a face.">
+<link rel="canonical" href="https://nirholas.github.io/tty-avatar/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="three.ws">
+<meta property="og:title" content="@three-ws/tty-avatar">
+<meta property="og:description" content="A live 3D avatar in your terminal. Renders any GLB (or any three.ws avatar by id) with a software rasterizer to truecolor half-blocks or braille, animates it with moods, and reacts in real time to Claude Code hooks so your coding agent has a face.">
+<meta property="og:url" content="https://nirholas.github.io/tty-avatar/">
+<meta property="og:image" content="https://nirholas.github.io/tty-avatar/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="@three-ws/tty-avatar">
+<meta name="twitter:description" content="A live 3D avatar in your terminal. Renders any GLB (or any three.ws avatar by id) with a software rasterizer to truecolor half-blocks or braille, animates it with moods, and reacts in real time to Claude Code hooks so your coding agent has a face.">
+<meta name="twitter:image" content="https://nirholas.github.io/tty-avatar/og.png">
+<meta name="keywords" content="three.ws, terminal, tty, ansi, braille, 3d, glb, gltf, avatar, software-rasterizer, claude-code, agent, cli, ai-agents">
+<link rel="alternate" type="text/plain" href="llms.txt" title="llms.txt">
+<link rel="icon" href="https://three.ws/three-ws-mcp-icon.svg" type="image/svg+xml">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"@three-ws/tty-avatar","description":"A live 3D avatar in your terminal. Renders any GLB (or any three.ws avatar by id) with a software rasterizer to truecolor half-blocks or braille, animates it with moods, and reacts in real time to Claude Code hooks so your coding agent has a face.","codeRepository":"https://github.com/nirholas/tty-avatar","programmingLanguage":"JavaScript","license":"https://spdx.org/licenses/Apache-2.0.html","version":"0.1.0","url":"https://nirholas.github.io/tty-avatar/","author":{"@type":"Organization","name":"three.ws","url":"https://three.ws"},"keywords":"three.ws, terminal, tty, ansi, braille, 3d, glb, gltf, avatar, software-rasterizer, claude-code, agent, cli, ai-agents"}</script>
+<style>:root{--bg:#fff;--fg:#111418;--mut:#586069;--line:#e3e6ea;--acc:#2563eb;--code:#f4f6f8;--card:#fafbfc}
+@media(prefers-color-scheme:dark){:root{--bg:#0b0d10;--fg:#e8eaed;--mut:#9aa3ad;--line:#232830;--acc:#6ea0ff;--code:#14181d;--card:#10141a}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+a{color:var(--acc)}a:focus-visible,button:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:4px}
+header.bar{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-weight:700;text-decoration:none;color:var(--fg)}
+.bar nav{margin-left:auto;display:flex;gap:16px;font-size:14px}
+.bar nav a{color:var(--mut);text-decoration:none;transition:color .15s}.bar nav a:hover{color:var(--fg)}
+.hero{max-width:1100px;margin:0 auto;padding:48px 16px 24px}
+.hero h1{font-size:clamp(28px,5vw,44px);line-height:1.15;margin:0 0 12px;letter-spacing:-.02em}
+.hero p{color:var(--mut);max-width:70ch;font-size:18px;margin:0 0 24px}
+.install{display:flex;align-items:center;gap:8px;max-width:620px;background:var(--code);border:1px solid var(--line);border-radius:10px;padding:6px 6px 6px 14px}
+.install code{flex:1;overflow-x:auto;white-space:nowrap;font:14px ui-monospace,SFMono-Regular,Menlo,monospace}
+.install button{border:0;background:var(--acc);color:#fff;border-radius:7px;padding:8px 14px;font:600 13px system-ui;cursor:pointer;transition:transform .12s,opacity .12s}
+.install button:hover{opacity:.9}.install button:active{transform:scale(.96)}
+.cta{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.cta a{padding:9px 16px;border:1px solid var(--line);border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;color:var(--fg);transition:border-color .15s,transform .15s}
+.cta a:hover{border-color:var(--acc);transform:translateY(-1px)}.cta a.pri{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.layout{max-width:1100px;margin:0 auto;padding:8px 16px 64px;display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:40px}
+@media(max-width:860px){.layout{grid-template-columns:minmax(0,1fr)}.toc{display:none}}
+.toc{position:sticky;top:76px;align-self:start;font-size:14px;border-left:1px solid var(--line);padding-left:16px}
+.toc p{margin:0 0 8px;font-weight:700;color:var(--mut);text-transform:uppercase;font-size:12px;letter-spacing:.06em}
+.toc ul{list-style:none;margin:0;padding:0}.toc li{margin:6px 0}.toc a{color:var(--mut);text-decoration:none}.toc a:hover{color:var(--fg)}
+main{min-width:0;overflow-wrap:anywhere}main pre code{overflow-wrap:normal}main img{max-width:100%;height:auto}
+main h2{margin-top:2.2em;padding-bottom:.3em;border-bottom:1px solid var(--line)}
+.anchor{margin-left:-1.1em;padding-right:.4em;text-decoration:none;opacity:0;color:var(--mut)}h2:hover .anchor,h3:hover .anchor,h4:hover .anchor{opacity:1}
+pre{background:var(--code);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow-x:auto;font-size:14px;line-height:1.5}
+code{font:0.9em ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--code);padding:.15em .35em;border-radius:5px}pre code{background:none;padding:0}
+table{border-collapse:collapse;display:block;overflow-x:auto;max-width:100%}th,td{border:1px solid var(--line);padding:8px 12px;text-align:left}th{background:var(--card)}
+blockquote{margin:1em 0;padding:.2em 1em;border-left:4px solid var(--line);color:var(--mut)}
+footer{border-top:1px solid var(--line);color:var(--mut);font-size:14px}
+.foot-in{max-width:1100px;margin:0 auto;padding:24px 16px;display:flex;gap:16px;flex-wrap:wrap}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}</style>
+</head>
+<body>
+<header class="bar"><div class="bar-in">
+<a class="brand" href="https://nirholas.github.io/tty-avatar/">@three-ws/tty-avatar</a>
+<nav aria-label="Project links"><a href="https://github.com/nirholas/tty-avatar">GitHub</a><a href="https://www.npmjs.com/package/@three-ws/tty-avatar">npm</a><a href="llms.txt">llms.txt</a><a href="https://three.ws">three.ws</a></nav>
+</div></header>
+<section class="hero">
+<h1>@three-ws/tty-avatar</h1>
+<p>A live 3D avatar in your terminal. Renders any GLB (or any three.ws avatar by id) with a software rasterizer to truecolor half-blocks or braille, animates it with moods, and reacts in real time to Claude Code hooks so your coding agent has a face.</p>
+<div class="install" role="group" aria-label="Install command"><code>npx -y @three-ws/tty-avatar</code><button type="button" data-copy="npx -y @three-ws/tty-avatar">Copy</button></div>
+<div class="cta"><a class="pri" href="https://github.com/nirholas/tty-avatar">View on GitHub</a><a href="https://github.com/nirholas/tty-avatar/stargazers">Star the repo</a></div>
+</section>
+<div class="layout">
+<main id="content"><h1>@three-ws/tty-avatar</h1>
+<p><strong>A live 3D avatar in your terminal.</strong> Any GLB, or any three.ws avatar or agent by id, rendered by a software rasterizer to truecolor half-blocks or braille, animated with moods, and wired to Claude Code hooks so your coding agent has a face that thinks while it reads, works while it edits, and celebrates when it stops.</p>
+<pre><code>npx @three-ws/tty-avatar 81a076b6-55ff-49a2-b007-1d88e7dce2aa
+</code></pre>
+<p>No GPU, no browser, no account. Node 18+ and a terminal that can show colour.</p>
+<pre><code>                        ahd0w
+                        bp00
+                       h0mYow#
+                       hJQpbh**d
+                     oo####*ahdod
+                     hhohaadwCkaw
+                    #abQhaoZZao*om
+                    *dwOo*bqO*#wUu
+                   #*qk**aU0#*qJ
+                  MqUo**hQw*#OL
+                 Mp  o*omh##mqL
+                #w  o*ooo**hba0
+                L#   hhkqcZpZpO
+                     bqmU ZpbdC
+                      qmU  pdbC
+                      qqU   qbQ
+                      bU0   LO0
+</code></pre>
+<p>That is the <code>ascii</code> mode of a real three.ws agent body (<code>tty-avatar snapshot agent:bd1b56b0-5494-47e2-ad78-04ef4c43ae5b --mode ascii</code>), which is what you get when stdout is not a TTY. In a terminal you get colour and 24 frames a second.</p>
+<h2 id="install"><a class="anchor" href="#install" aria-label="Link to this section">#</a>Install</h2>
+<pre><code class="language-sh">npm i -g @three-ws/tty-avatar     # or: npx @three-ws/tty-avatar …
+</code></pre>
+<h2 id="run"><a class="anchor" href="#run" aria-label="Link to this section">#</a>Run</h2>
+<pre><code class="language-sh">tty-avatar ./hero.glb                                   # a local model
+tty-avatar https://example.com/robot.glb                # a URL
+tty-avatar 81a076b6-55ff-49a2-b007-1d88e7dce2aa         # a three.ws avatar id
+tty-avatar agent:bd1b56b0-5494-47e2-ad78-04ef4c43ae5b   # a three.ws agent (its 3D body)
+tty-avatar https://three.ws/avatars/81a076b6-55ff-49a2-b007-1d88e7dce2aa   # a page URL
+</code></pre>
+<p>Options:</p>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--mode blocks|braille|ascii</code></td>
+<td>Glyph set. <code>blocks</code> (default on a TTY) is 1x2 truecolor half-blocks. <code>braille</code> is 2x4 dots per cell, four times the vertical detail. <code>ascii</code> is a luminance ramp with no escapes, the default when piped.</td>
+</tr>
+<tr>
+<td><code>--mood &lt;name&gt;</code></td>
+<td>Starting mood (<code>tty-avatar moods</code> lists them).</td>
+</tr>
+<tr>
+<td><code>--fps &lt;n&gt;</code></td>
+<td>Frame rate, default 24.</td>
+</tr>
+<tr>
+<td><code>--columns &lt;n&gt; --rows &lt;n&gt;</code></td>
+<td>Override the terminal size.</td>
+</tr>
+<tr>
+<td><code>--yaw &lt;deg&gt; --pitch &lt;deg&gt;</code></td>
+<td>Base rotation added to the mood&#39;s motion.</td>
+</tr>
+<tr>
+<td><code>--zoom &lt;x&gt;</code></td>
+<td>1 fits the whole model; 1.4 fills the frame with the upper body.</td>
+</tr>
+<tr>
+<td><code>--frames &lt;n&gt;</code></td>
+<td>Exit after n frames (recording, CI).</td>
+</tr>
+<tr>
+<td><code>--no-caption</code></td>
+<td>Hide the name and mood line.</td>
+</tr>
+<tr>
+<td><code>--no-alt</code></td>
+<td>Draw inline instead of on the alternate screen.</td>
+</tr>
+<tr>
+<td><code>--max-triangles &lt;n&gt;</code></td>
+<td>Decimate by stride above this many triangles (default 240000). A 20k-triangle avatar renders in under 5 ms per frame at 160x96 subpixels.</td>
+</tr>
+<tr>
+<td><code>--origin &lt;url&gt;</code></td>
+<td>three.ws origin for id lookups.</td>
+</tr>
+<tr>
+<td><code>--state-dir &lt;dir&gt;</code></td>
+<td>Where mood and hook files live (default <code>~/.three-ws/tty-avatar</code>, or <code>$TTY_AVATAR_DIR</code>).</td>
+</tr>
+<tr>
+<td><code>--no-state</code></td>
+<td>Ignore the state directory.</td>
+</tr>
+</tbody></table>
+<h2 id="moods"><a class="anchor" href="#moods" aria-label="Link to this section">#</a>Moods</h2>
+<p>A mood is procedural whole-body motion: no rig needed, so it works on any GLB, a prop included.</p>
+<table>
+<thead>
+<tr>
+<th>Mood</th>
+<th>Reads as</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>idle</code></td>
+<td>slow sway, breathing</td>
+</tr>
+<tr>
+<td><code>spin</code></td>
+<td>turntable</td>
+</tr>
+<tr>
+<td><code>think</code></td>
+<td>tilted, looking up, slow sway</td>
+</tr>
+<tr>
+<td><code>work</code></td>
+<td>small quick nods, like typing</td>
+</tr>
+<tr>
+<td><code>talk</code></td>
+<td>bobbing on a speech rhythm</td>
+</tr>
+<tr>
+<td><code>happy</code></td>
+<td>bouncing</td>
+</tr>
+<tr>
+<td><code>attention</code></td>
+<td>pulsing, asking for you</td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td>a fast shake</td>
+</tr>
+<tr>
+<td><code>sleep</code></td>
+<td>head down, slow breathing</td>
+</tr>
+</tbody></table>
+<p>Change the mood of a running viewer from any other shell:</p>
+<pre><code class="language-sh">tty-avatar mood happy --say &quot;deploy landed&quot; --ttl 5000   # back to idle after 5 s
+tty-avatar say &quot;running the migration&quot;
+</code></pre>
+<h2 id="give-your-coding-agent-a-face"><a class="anchor" href="#give-your-coding-agent-a-face" aria-label="Link to this section">#</a>Give your coding agent a face</h2>
+<p>Claude Code emits a hook event for every prompt, tool call, notification and stop. Wire them to the viewer once:</p>
+<pre><code class="language-sh">tty-avatar install-hooks --write        # merges into ~/.claude/settings.json
+</code></pre>
+<p>Then run a viewer in a split pane (<code>tty-avatar &lt;avatar id&gt;</code>) and start Claude Code in another. The avatar now:</p>
+<table>
+<thead>
+<tr>
+<th>Claude Code event</th>
+<th>Mood</th>
+<th>Caption</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>SessionStart</code></td>
+<td>happy</td>
+<td>session started</td>
+</tr>
+<tr>
+<td><code>UserPromptSubmit</code></td>
+<td>think</td>
+<td>reading your prompt</td>
+</tr>
+<tr>
+<td><code>PreToolUse</code></td>
+<td>work</td>
+<td><code>editing index.js</code>, <code>$ npm test</code>, <code>searching</code>, <code>browsing</code>, <code>delegating</code></td>
+</tr>
+<tr>
+<td><code>PostToolUse</code></td>
+<td>think, or error when the tool reported failure</td>
+<td><code>Bash done</code></td>
+</tr>
+<tr>
+<td><code>Notification</code></td>
+<td>attention (30 s)</td>
+<td>the notification text</td>
+</tr>
+<tr>
+<td><code>Stop</code> / <code>SubagentStop</code></td>
+<td>happy (4 s)</td>
+<td>done</td>
+</tr>
+<tr>
+<td><code>PreCompact</code></td>
+<td>think</td>
+<td>compacting memory</td>
+</tr>
+<tr>
+<td><code>SessionEnd</code></td>
+<td>sleep</td>
+<td>session ended</td>
+</tr>
+</tbody></table>
+<p>The installed hook command is <code>mkdir -p … &amp;&amp; cat &gt; ~/.three-ws/tty-avatar/event.json</code>. It is not a Node process, so it adds nothing measurable to a tool call; the viewer polls the file and does the mapping. <code>tty-avatar install-hooks</code> without <code>--write</code> prints the JSON fragment instead, and <code>--json</code> prints just the <code>hooks</code> object for another tool to merge.</p>
+<p>Any other runtime can drive it the same way: write a Claude-Code-shaped payload to <code>event.json</code>, or call <code>tty-avatar mood</code> / <code>tty-avatar say</code> from a script.</p>
+<h2 id="snapshot"><a class="anchor" href="#snapshot" aria-label="Link to this section">#</a>Snapshot</h2>
+<pre><code class="language-sh">tty-avatar snapshot ./hero.glb --mode braille --columns 80 --rows 40 --yaw 30
+tty-avatar snapshot 81a076b6-55ff-49a2-b007-1d88e7dce2aa --plain &gt; avatar.txt
+</code></pre>
+<p>One frame, then exit. <code>--mood</code> and <code>--yaw</code>/<code>--pitch</code> pose it.</p>
+<h2 id="library"><a class="anchor" href="#library" aria-label="Link to this section">#</a>Library</h2>
+<pre><code class="language-js">import { resolveSource, parseGlb, TtyAvatar, snapshot } from &#39;@three-ws/tty-avatar&#39;;
+
+const { bytes, name } = await resolveSource(&#39;81a076b6-55ff-49a2-b007-1d88e7dce2aa&#39;);
+const mesh = await parseGlb(bytes);
+
+// A viewer that owns the terminal until stop():
+const viewer = new TtyAvatar(mesh, { name, mode: &#39;blocks&#39;, fps: 24 });
+viewer.on(&#39;mood&#39;, ({ mood, say }) =&gt; console.error(mood, say));
+setTimeout(() =&gt; viewer.setMood(&#39;happy&#39;, { say: &#39;tests green&#39;, ttlMs: 3000 }), 2000);
+await viewer.start();
+
+// Or one frame as a string, no terminal involved:
+console.log(snapshot(mesh, { mode: &#39;ascii&#39;, columns: 60, rows: 30, yaw: 0.5 }));
+</code></pre>
+<p>Exports:</p>
+<table>
+<thead>
+<tr>
+<th>Export</th>
+<th>What</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>resolveSource(input, { origin })</code></td>
+<td>file path, URL, avatar id, <code>agent:&lt;id&gt;</code>, or three.ws page URL → <code>{ bytes, name, source, url, page }</code></td>
+</tr>
+<tr>
+<td><code>parseGlb(bytes, { maxTriangles })</code>, <code>loadGlbFile(path)</code></td>
+<td>GLB → <code>{ positions, normals, tints, count, bounds }</code> (unit sphere, Y-up, node transforms baked, meshopt and Draco decoded)</td>
+</tr>
+<tr>
+<td><code>createFrame(w, h)</code>, <code>render(mesh, frame, pose, camera)</code></td>
+<td>the rasterizer: z-buffered scanline fill, back-face culling, key + fill + rim lighting</td>
+</tr>
+<tr>
+<td><code>encode(frame, { mode })</code>, <code>encodeBlocks</code>, <code>encodeBraille</code>, <code>encodeAscii</code>, <code>stripAnsi</code>, <code>MODES</code></td>
+<td>frame → lines</td>
+</tr>
+<tr>
+<td><code>MOODS</code>, <code>MOOD_NAMES</code>, <code>isMood</code>, <code>poseAt(current, previous, now)</code></td>
+<td>motion functions and the cross-fade between them</td>
+</tr>
+<tr>
+<td><code>TtyAvatar</code></td>
+<td>the frame loop: <code>start({ frames })</code>, <code>stop()</code>, <code>setMood(name, { say, ttlMs })</code>, <code>setCaption(text)</code>, <code>renderLines()</code>, events <code>frame</code>, <code>mood</code>, <code>stop</code></td>
+</tr>
+<tr>
+<td><code>snapshot(mesh, opts)</code></td>
+<td>one frame as a string</td>
+</tr>
+<tr>
+<td><code>writeState</code>, <code>writeEvent</code>, <code>pollState</code>, <code>moodForHookEvent</code>, <code>defaultStateDir</code>, <code>statePaths</code></td>
+<td>the file bridge</td>
+</tr>
+<tr>
+<td><code>claudeHooksConfig(dir)</code>, <code>installClaudeHooks({ settingsPath, dir })</code>, <code>hookCommand(dir)</code></td>
+<td>Claude Code wiring</td>
+</tr>
+</tbody></table>
+<h2 id="how-it-draws"><a class="anchor" href="#how-it-draws" aria-label="Link to this section">#</a>How it draws</h2>
+<p>The terminal is the framebuffer. Each character cell is split into subpixels (1x2 for half-blocks, 2x4 for braille), the mesh is projected with a perspective camera onto that grid, and a z-buffered scanline fill writes one lit colour per subpixel. Shading is per face: a key light, a fill light, an ambient floor, and a rim term so silhouettes stay readable on dark and light backgrounds. Colour comes from each primitive&#39;s material <code>baseColorFactor</code> (and <code>COLOR_0</code> when present); textures are not sampled, because a cell is far coarser than a texel and a flat tint under lighting reads better at 80 columns.</p>
+<p>Half-block mode packs two colours into one cell (foreground on <code>▀</code>, background behind it), so a 100x40 terminal is a 100x80 colour image. Braille mode packs eight coverage bits per cell with one colour, so the same terminal is a 200x160 monochrome-per-cell image.</p>
+<h2 id="tests"><a class="anchor" href="#tests" aria-label="Link to this section">#</a>Tests</h2>
+<pre><code class="language-sh">npm test
+</code></pre>
+<p>Builds a real GLB in memory with <code>@gltf-transform/core</code>, runs it through the loader, rasterizer, every encoder, the mood blender, the state bridge, the hook installer, and the CLI end to end.</p>
+<h2 id="links"><a class="anchor" href="#links" aria-label="Link to this section">#</a>Links</h2>
+<ul>
+<li>Docs: <a href="https://three.ws/docs/tty-avatar">https://three.ws/docs/tty-avatar</a></li>
+<li>Pick an avatar: <a href="https://three.ws/gallery">https://three.ws/gallery</a> (every avatar page&#39;s Embed tab has the <code>npx</code> line)</li>
+<li>Source: <a href="https://github.com/nirholas/three.ws/tree/main/packages/tty-avatar">https://github.com/nirholas/three.ws/tree/main/packages/tty-avatar</a></li>
+</ul>
+<p>Apache-2.0.</p>
+</main>
+<nav class="toc" aria-label="On this page"><p>On this page</p><ul><li><a href="#install">Install</a></li><li><a href="#run">Run</a></li><li><a href="#moods">Moods</a></li><li><a href="#give-your-coding-agent-a-face">Give your coding agent a face</a></li><li><a href="#snapshot">Snapshot</a></li><li><a href="#library">Library</a></li><li><a href="#how-it-draws">How it draws</a></li><li><a href="#tests">Tests</a></li><li><a href="#links">Links</a></li></ul></nav>
+</div>
+<footer><div class="foot-in"><span>Apache-2.0 licensed</span><a href="https://github.com/nirholas/tty-avatar/issues">Issues</a><a href="https://github.com/nirholas/tty-avatar/blob/main/CONTRIBUTING.md">Contributing</a><a href="https://github.com/nirholas/tty-avatar/security/policy">Security</a><a href="https://three.ws">Part of three.ws</a></div></footer>
+<script>document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){
+var t=b.getAttribute('data-copy');var done=function(){var o=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=o},1400)};
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,function(){})}
+else{var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');done()}catch(e){}a.remove()}})});</script>
+</body>
+</html>

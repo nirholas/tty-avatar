@@ -1,0 +1,19 @@
+# @three-ws/tty-avatar
+
+> A live 3D avatar in your terminal. Renders any GLB (or any three.ws avatar by id) with a software rasterizer to truecolor half-blocks or braille, animates it with moods, and reacts in real time to Claude Code hooks so your coding agent has a face.
+
+@three-ws/tty-avatar is a JavaScript library from three.ws. Install: `npx -y @three-ws/tty-avatar`.
+
+## Docs
+
+- [README](https://github.com/nirholas/tty-avatar/blob/main/README.md): install, configuration, full reference
+- [Documentation site](https://nirholas.github.io/tty-avatar/): the README as a web page
+- [Full text for LLMs](https://nirholas.github.io/tty-avatar/llms-full.txt): README inlined
+- [AGENTS.md](https://github.com/nirholas/tty-avatar/blob/main/AGENTS.md): guidance for coding agents
+
+## Project
+
+- [Source](https://github.com/nirholas/tty-avatar)
+- [npm](https://www.npmjs.com/package/@three-ws/tty-avatar)
+- [three.ws](https://three.ws): the platform this is part of
+- [Issues](https://github.com/nirholas/tty-avatar/issues)
