@@ -7,8 +7,9 @@
   "plugins": [
     {
       "name": "tty-avatar",
-      "source": "./plugin",
+      "source": "./plugins/tty-avatar",
       "description": "Show any GLB or three.ws avatar in the terminal, snapshot frames, and wire Claude Code hooks to its mood.",
+      "category": "development",
       "tags": [
         "terminal",
         "avatar",
